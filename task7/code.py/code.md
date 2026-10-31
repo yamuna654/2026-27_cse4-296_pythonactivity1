@@ -1,131 +1,131 @@
 
-
 ## 1. Problem Statement
 
-Develop a Railway Fare and Reservation Calculator that calculates fares for multiple passengers based on travel distance, travel class, and age-based concessions. The system adds reservation fees, validates passenger details, calculates cancellation penalties and refunds, and generates a formatted reservation statement.
+Develop a Python program to generate an itemized retail invoice for multiple products. The program should calculate product costs based on quantities, apply category-specific taxes, provide discounts based on purchase thresholds, and enforce a maximum concession limit. Finally, it should display the complete bill with the total amount payable.
 
-**Rules used:**
-- **Distance slabs:** First 100 km at ₹1.50/km, next 200 km at ₹1.25/km, and distance above 300 km at ₹1.00/km.
-- **Travel classes:** Sleeper (1×), AC 3 Tier (2×), AC 2 Tier (3×), and AC First Class (4×).
-- **Age concessions:** Below 5 years—100% of travel fare; ages 5–11—50%; ages 60 and above—40%; other passengers—no concession.
-- **Reservation fee:** ₹40 per passenger.
-- **Cancellation penalty:** 25% of the discounted travel fare. The reservation fee is non-refundable.
+## 2. Objective
 
-*These are hypothetical academic-project rules, not actual railway fare or concession policies.*
+- Process multiple products and their quantities.
+- Calculate the total price of each item.
+- Apply different tax rates according to product categories.
+- Apply discounts based on purchase amount.
+- Ensure discounts do not exceed the maximum concession limit.
+- Generate an itemized invoice.
 
-## 2. Algorithm
+## 3. Assumptions
+
+1. Electronics products have a 10% tax rate.
+2. Clothing products have a 5% tax rate.
+3. Grocery products have a 2% tax rate.
+4. Purchases of ₹5,000 or more receive a 10% discount.
+5. Purchases of ₹2,000 or more receive a 5% discount.
+6. Other purchases receive no discount.
+7. The maximum discount allowed is ₹500.
+8. The discount is calculated on the subtotal before tax.
+
+
+## 4. Algorithm
 
 1. Start.
-2. Enter the travel distance and number of passengers.
-3. Validate the distance and passenger count.
-4. Enter each passenger's name, age, and travel class.
-5. Calculate the base fare using distance slabs.
-6. Apply the travel class multiplier.
-7. Calculate the age-based concession.
-8. Add the reservation fee.
-9. Calculate the passenger's total fare.
-10. Ask whether the passenger wants to cancel the ticket.
-11. If cancelled, calculate the penalty and refund.
-12. Repeat the process for all passengers.
-13. Display the individual fare statements and total booking cost.
-14. Display the total refund and net cost after refunds.
-15. Stop.
-
-
-## 5. Sample Input
-
-```text
-Enter travel distance (km): 350
-Enter number of passengers: 2
-
-Passenger 1
-Enter passenger name: Ravi
-Enter passenger age: 30
-Enter travel class: Sleeper
-Cancel ticket? (yes/no): no
-
-Passenger 2
-Enter passenger name: Lakshmi
-Enter passenger age: 65
-Enter travel class: AC 3 Tier
-Cancel ticket? (yes/no): yes
-```
-
-## 6. Sample Output
-
-```text
-================================================
-     RAILWAY RESERVATION STATEMENT
-================================================
-
-Passenger: Ravi
-Age: 30
-Travel Class: Sleeper
-Base Fare: ₹450.00
-Concession: ₹0.00
-Reservation Fee: ₹40.00
-Total Fare: ₹490.00
-Status: Confirmed
-Cancellation Penalty: ₹0.00
-Refund: ₹0.00
-------------------------------------------------
-
-Passenger: Lakshmi
-Age: 65
-Travel Class: AC 3 Tier
-Base Fare: ₹450.00
-Concession: ₹360.00
-Reservation Fee: ₹40.00
-Total Fare: ₹580.00
-Status: Cancelled
-Cancellation Penalty: ₹135.00
-Refund: ₹405.00
-------------------------------------------------
-
-Total Booking Cost: ₹1070.00
-Total Refund: ₹405.00
-Net Cost After Refunds: ₹665.00
-================================================
-```
-
-## 7. Mermaid Flowchart Code
+2. Initialize the subtotal to zero.
+3. Input the number of products.
+4. For each product:
+   - Input product name, category, unit price, and quantity.
+   - Calculate the item total.
+   - Determine the tax rate based on the category.
+   - Calculate the tax amount.
+   - Add the item total and tax to the invoice totals.
+5. Check the subtotal and determine the discount percentage.
+6. Calculate the discount amount.
+7. Apply the maximum concession limit.
+8. Calculate the final amount payable.
+9. Display the itemized invoice.
+10. Stop.
+##mermaid
 ```mermaid
 flowchart TD
-    A([Start]) --> B[/Enter distance and passenger count/]
-    B --> C{Are inputs valid?}
+    A([Start]) --> B[/Input number of products/]
+    B --> C[/Input product name, category, price and quantity/]
+    C --> D[Calculate item total]
+    D --> E[Determine category tax rate]
+    E --> F[Calculate tax amount]
+    F --> G[Update subtotal and total tax]
+    G --> H{More products?}
+    H -- Yes --> C
+    H -- No --> I{Check subtotal}
+    I -- "Subtotal >= 5000" --> J[Calculate 10% discount]
+    I -- "Subtotal >= 2000 and < 5000" --> K[Calculate 5% discount]
+    I -- "Subtotal < 2000" --> L[Discount = 0]
+    J --> M{Discount > 500?}
+    K --> M
+    L --> N[Calculate final amount]
+    M -- Yes --> O[Set discount = 500]
+    M -- No --> P[Keep calculated discount]
+    O --> N
+    P --> N
+    N --> Q[Print itemized invoice]
+    Q --> R([Stop])
 
-    C -- No --> D[Display error]
-    D --> Z([Stop])
+    style A fill:#d4edda,stroke:#28a745
+    style R fill:#d4edda,stroke:#28a745
+    style I fill:#fff3cd,stroke:#ffc107
+    style M fill:#fff3cd,stroke:#ffc107
+    style Q fill:#d1ecf1,stroke:#17a2b8
 
-    C -- Yes --> E[/Enter passenger details and class/]
-    E --> F{Are passenger details valid?}
+## 6. Sample Input
 
-    F -- No --> D
-    F -- Yes --> G[Calculate base fare using distance slabs]
+```text
+Enter number of products: 3
 
-    G --> H[Apply class multiplier]
-    H --> I[Apply age-based concession]
-    I --> J[Add reservation fee]
-    J --> K[Calculate total fare]
+Product 1
+Enter product name: Laptop
+Enter category (electronics/clothing/grocery): electronics
+Enter price: 40000
+Enter quantity: 1
 
-    K --> L{Cancel ticket?}
+Product 2
+Enter product name: Shirt
+Enter category (electronics/clothing/grocery): clothing
+Enter price: 1000
+Enter quantity: 2
 
-    L -- Yes --> M[Calculate cancellation penalty]
-    M --> N[Calculate refund]
-
-    L -- No --> O[Keep ticket confirmed]
-
-    N --> P[Save passenger details]
-    O --> P
-
-    P --> Q{More passengers?}
-    Q -- Yes --> E
-    Q -- No --> R[Calculate total booking and refunds]
-
-    R --> S[/Display final reservation statement/]
-    S --> Z
+Product 3
+Enter product name: Rice
+Enter category (electronics/clothing/grocery): grocery
+Enter price: 500
+Enter quantity: 2
 ```
 
-## 8. Conclusion
+## 7. Sample Output
 
-The Railway Fare and Reservation Calculator calculates fares for multiple passengers based on distance, travel class, and age. It applies concessions, includes reservation fees, validates inputs, calculates cancellation penalties and refunds, and produces a formatted reservation statement. The project demonstrates Python functions, loops, dictionaries, conditional statements, exception handling, and formatted output.
+```text
+========== RETAIL INVOICE ==========
+Product      Qty   Price   Total    Tax%   Tax
+Laptop         1 40000.00 40000.00   10% 4000.00
+Shirt          2 1000.00  2000.00    5%  100.00
+Rice           2  500.00  1000.00    2%   20.00
+------------------------------------
+Subtotal        : Rs. 43000.00
+Total Tax       : Rs. 4120.00
+Discount        : Rs. 500.00
+Final Amount    : Rs. 46620.00
+====================================
+```
+
+
+## 9. Test Cases
+
+| Test Case | Subtotal | Expected Discount |
+|---|---:|---:|
+| 1 | ₹1,000 | ₹0 |
+| 2 | ₹2,000 | ₹100 |
+| 3 | ₹4,000 | ₹200 |
+| 4 | ₹5,000 | ₹500 |
+| 5 | ₹10,000 | ₹500 |
+
+## 10. Conclusion
+
+This project demonstrates how Python can be used to develop a retail billing system. It uses loops, conditional statements, arithmetic operations, and lists to process multiple products, calculate category-specific taxes, apply threshold-based discounts, enforce a maximum concession limit, and generate an itemized invoice.
+
+**Technologies Used:** Python 3
+
