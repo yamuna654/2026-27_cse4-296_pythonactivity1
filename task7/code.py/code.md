@@ -41,7 +41,8 @@ Develop a Python program to generate an itemized retail invoice for multiple pro
 8. Calculate the final amount payable.
 9. Display the itemized invoice.
 10. Stop.
-##mermaid
+## 8. Mermaid Flowchart Code 
+
 ```mermaid
 flowchart TD
     A([Start]) --> B[/Input number of products/]
