@@ -71,10 +71,10 @@ flowchart TD
     style I fill:#fff3cd,stroke:#ffc107
     style M fill:#fff3cd,stroke:#ffc107
     style Q fill:#d1ecf1,stroke:#17a2b8
-
+```
 ## 6. Sample Input
 
-```text
+```
 Enter number of products: 3
 
 Product 1
